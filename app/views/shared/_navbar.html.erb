@@ -1,0 +1,12 @@
+<div class="navbar">
+  <div class="navbar-element">
+    <% if current_user.admin? %>
+      <i class="fa fa-unlock-alt" aria-hidden="true"></i> You're logged in as admin
+    <% end %>
+  </div>
+  <div class="navbar-element">
+    <%= link_to destroy_user_session_path, method: :delete do %>
+      <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
+    <% end %>
+  </div>
+</div>

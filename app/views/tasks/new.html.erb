@@ -1,0 +1,17 @@
+<h2>Create a new task</h2>
+
+<%= simple_form_for(@task) do |f| %>
+
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.fields_for :assignments do |ff| %>
+      <%= ff.label :user_id %><br>
+      <%= ff.collection_select :user_id, User.all, :id, :first_name,  {include_blank: true}, {:multiple => true, :class=>""} %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

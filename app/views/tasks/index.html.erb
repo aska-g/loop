@@ -1,0 +1,21 @@
+<h2>Things to do today</h2>
+<ul>
+  <% if @tasks.nil? %>
+    Nothing to do, go and chill
+  <% else %>
+    <% @tasks.each do |task| %>
+      <% if !task.done? %>
+        <li class="task"><%= link_to '', complete_task_path(task), method: :put, class: "fa fa-circle-o" %> <%= task.name %></li>
+      <% else %>
+        <li class='done-task'><%= link_to '', uncomplete_task_path(task), method: :put, class: "fa fa-check-circle-o" %> <%= task.name %></li>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
+
+
+<% if current_user.admin? %>
+  <%= link_to new_task_path do %>
+    <i class="fa fa-plus-circle"></i> Add new task
+  <% end %>
+<% end %>
