@@ -46,6 +46,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :recurring, assignments_attributes: [:user_id] )
+    params.require(:task).permit(:name, :recurring, assignments_attributes: [user_id: [] ] )
   end
 end
