@@ -10,13 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171012091255) do
+ActiveRecord::Schema.define(version: 20171012094355) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "task_id"
-    t.boolean "recurring"
-    t.boolean "done"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_assignments_on_task_id"
@@ -25,6 +23,8 @@ ActiveRecord::Schema.define(version: 20171012091255) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
+    t.boolean "recurring", default: false
+    t.boolean "done", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(version: 20171012091255) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
