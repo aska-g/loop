@@ -15,8 +15,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @assignment = @task.assignments.new(params[:assignments])
-    @assignment.save
+    @task.assignments = task_assignments
+    #@assignment.save
     @task.save
     byebug
     if @task.save
@@ -46,6 +46,12 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :recurring, assignments_attributes: [user_id: [] ] )
+
+    params.require(:task).permit(:name, :recurring )
+  end
+
+  def task_assignments
+    ids = params[:task][:assignments_attributes]["0"]["user_id"].select(&:present?)
+    ids.map { |id| Assignment.new(user_id: id) }
   end
 end
