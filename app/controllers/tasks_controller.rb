@@ -2,11 +2,18 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:complete, :uncomplete, :show]
 
   def index
-    @tasks = current_user.tasks
+    if current_user.admin?
+      @tasks = Task.all
+    else
+      @tasks = current_user.tasks
+    end
+
+    # @display_tasks = @tasks.flat_map{ |t| t.display_tasks(params.fetch(:start_date, Time.zone.now).to_date ) }
   end
 
   def new
     @task = Task.new
+    @users = User.all
     @task.assignments.build
   end
 
@@ -16,11 +23,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.assignments = task_assignments
-    #@assignment.save
     @task.save
-    byebug
     if @task.save
-      redirect_to task_path(@task)
+      redirect_to tasks_path
     else
       render :new
     end
@@ -46,12 +51,11 @@ class TasksController < ApplicationController
   end
 
   def task_params
-
-    params.require(:task).permit(:name, :recurring )
+    params.require(:task).permit(:name, :recurring, :recurrence )
   end
 
   def task_assignments
-    ids = params[:task][:assignments_attributes]["0"]["user_id"].select(&:present?)
+    ids = params[:task]["user_ids"].reject(&:empty?)
     ids.map { |id| Assignment.new(user_id: id) }
   end
 end

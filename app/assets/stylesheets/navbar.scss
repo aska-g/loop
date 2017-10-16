@@ -1,9 +1,17 @@
 .navbar {
-  text-align: right;
+  align-self: flex-start;
+  width: 100vw;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navbar-element {
+  display:flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+.navbar-subelement {
   padding-left: 20px;
 }
+

@@ -1,17 +1,38 @@
-<h2>Create a new task</h2>
+<div class="wrapper">
+  <h2>Create a new task</h2>
 
-<%= simple_form_for(@task) do |f| %>
+  <%= simple_form_for(@task) do |f| %>
 
-  <div class="field">
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.fields_for :assignments do |ff| %>
-      <%= ff.label :user_id %><br>
-      <%= ff.collection_select :user_id, User.all, :id, :first_name,  {include_blank: true}, {:multiple => true, :class=>""} %>
-    <% end %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <%= f.error_notification %>
+    <div class="form-inputs ">
+      <div class="field">
+        <%= f.input :name, label: false, placeholder: 'What needs to be done?', :input_html => {:maxlength => 150, :size => 50} %>
+      </div>
+      <div class="field">
+        <%= f.input :due_date, label: 'Due date (optional)',include_blank: true %>
+      </div>
+      <div class="field">
+        <%= f.label 'Recurring?' %>
+        <%= f.select_recurring :recurrence, nil, allow_blank: true %>
+      </div>
+      <div class="field">
+        <%= f.check_box :high_priority, as: :boolean, checked_value: true, unchecked_value: false, class: 'switch' %>
+        <%= f.label :high_priority %>
+      </div>
+      <div class="field">
+        <%= f.label 'Assign task:' %>
+      </div>
+      <div class="field">
+        <%= f.association :users, label: false, label_method: :first_name, as: :check_boxes, input_html: { multiple: true, class: 'switch' } %>
+      </div>
+
+    </div>
+    <div class="actions centered">
+
+      <button type="submit" id="submitButton">
+          <i class="fa fa-check-circle"></i>
+      </button>
+
+    </div>
+  <% end %>
+</div>

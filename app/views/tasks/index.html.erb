@@ -1,21 +1,47 @@
-<h2>Things to do today</h2>
-<ul>
-  <% if @tasks.nil? %>
-    Nothing to do, go and chill
-  <% else %>
-    <% @tasks.each do |task| %>
-      <% if !task.done? %>
-        <li class="task"><%= link_to '', complete_task_path(task), method: :put, class: "fa fa-circle-o" %> <%= task.name %></li>
-      <% else %>
-        <li class='done-task'><%= link_to '', uncomplete_task_path(task), method: :put, class: "fa fa-check-circle-o" %> <%= task.name %></li>
+
+
+<div class="wrapper">
+  <% if current_user.admin? %>
+    <h2>Your team's tasks for today</h2>
+  <% end %>
+  <% if !current_user.admin? %>
+    <h2>Things to do today</h2>
+  <% end %>
+  <ul>
+    <% if @tasks.nil? %>
+      Nothing to do, go and chill
+    <% else %>
+      <% @tasks.each do |task| %>
+        <li class="task <%= 'overdue' if !task.done? && task.due_date.present? && (task.due_date < Date.today) %>">
+          <% if !task.done? %>
+            <%= link_to '', complete_task_path(task), method: :put, class: "fa fa-circle-o" %>&emsp;<%= link_to task.name, task_path(task) %>
+          <% else %>
+            <%= link_to '', uncomplete_task_path(task), method: :put, class: "fa fa-check-circle-o" %>&emsp;<%= link_to task.name, task_path(task) %>
+          <% end %>
+
+          <!-- additional icon logic -->
+          <% if task.due_date.present? && (task.due_date < Date.today) %>
+            &emsp;<i class="fa fa-clock-o" aria-hidden="true"></i>
+          <% elsif task.recurrence.present? == true %>
+            &emsp;<i class="fa fa-repeat" aria-hidden="true"></i>
+            <% if task.recurrence[:validations][:day].present? %>
+              <%= Date::DAYNAMES[task.created_at.wday] %>
+            <% end %>
+          <% elsif task.high_priority == true %>
+            &emsp;<i class="fa fa-bolt" aria-hidden="true"></i>
+          <% end %>
+          <!-- end of additional icon logic -->
+        </li>
       <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+  <div class="task-button">
+    <% if current_user.admin? %>
+      <%= link_to new_task_path do %>
+        <i class="fa fa-plus-circle"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 
-<% if current_user.admin? %>
-  <%= link_to new_task_path do %>
-    <i class="fa fa-plus-circle"></i> Add new task
-  <% end %>
-<% end %>

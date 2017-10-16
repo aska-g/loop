@@ -29,7 +29,7 @@ print '.'
 
 Rails.logger.info "Creating tasks..."
 
-20.times do |t|
+5.times do |t|
   Task.create(
     name: FFaker::Job.title
   )
@@ -38,7 +38,7 @@ end
 
 Rails.logger.info "Creating assignments..."
 
-20.times do |a|
+10.times do |a|
   Assignment.create(
     user_id: User.pluck(:id).sample,
     task_id: Task.pluck(:id).sample

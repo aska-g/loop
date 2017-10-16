@@ -1,3 +1,43 @@
+.wrapper {
+  width: 100%;
+  padding: 10px;
+  margin: 50px auto;
+  @media (min-width: 768px) {
+    width: 400px;
+  }
+  @media (min-width: 995px) {
+    width: 500px;
+  }
+}
+
+.centered {
+  text-align: center;
+}
+
+.task {
+  margin: 20px 0;
+
+}
+
 .done-task {
   opacity: 0.5;
+}
+
+.task-button {
+  text-align: center;
+  font-size: 50px;
+  opacity: 0.8;
+}
+
+
+.task-button:hover {
+  opacity: 1;
+}
+
+.task-button .fa {
+  color: #538F6A;
+}
+
+.overdue a {
+  color: #96281B !important;
 }

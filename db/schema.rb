@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171012094355) do
+ActiveRecord::Schema.define(version: 20171015220738) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id"
@@ -23,10 +23,13 @@ ActiveRecord::Schema.define(version: 20171012094355) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
-    t.boolean "recurring", default: false
     t.boolean "done", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "due_date"
+    t.boolean "high_priority", default: false
+    t.text "recurrence"
+    t.datetime "start_time"
   end
 
   create_table "users", force: :cascade do |t|
