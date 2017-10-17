@@ -1,3 +1,8 @@
+$gray: #ECECEC;
+$dark-gray: #ddd;
+$bg: white;
+$green: #538F6A;
+
 .wrapper {
   width: 100%;
   padding: 10px;
@@ -15,7 +20,7 @@
 }
 
 .task {
-  margin: 20px 0;
+  margin: 40px 0;
 
 }
 
@@ -25,8 +30,15 @@
 
 .task-button {
   text-align: center;
-  font-size: 50px;
+  font-size: 30px;
   opacity: 0.8;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background-color: $green;
+  margin: 50px 10px;
+  line-height: 52px;
 }
 
 
@@ -41,3 +53,4 @@
 .overdue a {
   color: #96281B !important;
 }
+

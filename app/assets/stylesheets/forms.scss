@@ -17,6 +17,14 @@ input {
   display:flex;
   align-items: center;
   margin: 30px 0;
+  font-size: 1em;
+}
+
+// validation messages
+.help-block {
+  color: $green;
+  font-size: 0.8em;
+  font-style: italic;
 }
 
 input[type=text], input[type=email], input[type=password] {
@@ -97,14 +105,52 @@ input[type="checkbox"].switch:checked:after{
 button[type=submit] {
   background-color: $bg;
   border: none;
-  font-size: 50px;
-  color: $green;
-  margin: 50px;
-
 }
 
 button[type=submit]:focus, button[type=submit]:active {
   outline:0;
+}
+
+// date
+input[type=date] {
+  font-size: 1em;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 7.5em;
+  height: 1.5em;
+  border: none;
+  border-bottom: 2px solid $gray;
+  outline: none;
+  margin: 10px 0;
+  text-align: center;
+  -webkit-padding-start: 4px;
+
+  &::-webkit-clear-button {
+    display: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    display:none;
+  }
+}
+
+input[type=date]:focus {
+  width: 9em;
+  &::-webkit-calendar-picker-indicator {
+    display:inline;
+    font-size: 1em;
+  }
+}
+
+// schedule selector
+select.recurring_select {
+  border: none;
+  background-color: $bg;
+  border-bottom: 2px solid $gray;
+  font-size: 1em;
+}
+.recurring_select:focus, .recurring_select:active {
+  outline: none;
 }
 
 
@@ -173,24 +219,6 @@ label.optional {
   color: $gray;
   font-size: 1em;
 }
-
-
-// .submit-button {
-//   color: #999999;
-//   background-color: $bg;
-//   border: 1px solid #999999;
-//   padding: 10px 15px;
-//   border-radius: 50px;
-//   font-weight: lighter;
-//   opacity: 0.8;
-
-// }
-
-// .submit-button:hover {
-//   opacity: 1;
-//   text-decoration: none;
-//   color: #999999;
-// }
 
 .hint {
   font-size: 0.75em;

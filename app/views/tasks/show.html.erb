@@ -1,25 +1,43 @@
-<h2><%= @task.name %></h2>
+<div class="wrapper">
+  <h2><%= @task.name %></h2>
 
-<div>
-  Recurring?
-  <% if @task.recurrence.present? %>
-    <p><i class="fa fa-check" aria-hidden="true"></i> Yes</p>
-  <% else %>
-    <p> <i class="fa fa-times" aria-hidden="true"></i> No</p>
-  <% end %>
-</div>
-
-<div>
-
-</div>
-
-
-<div>
-  Responsible:
-  <ul>
-    <% @task.users.each do |user| %>
-      <li><i class="fa fa-user" aria-hidden="true"></i> <%= user.first_name %></li>
+  <div>
+    <p>Recurring?&emsp;
+    <% if @task.recurrence.present? %>
+      <i class="fa fa-check" aria-hidden="true"></i> Yes</p>
+    <% else %>
+      <i class="fa fa-times" aria-hidden="true"></i> No</p>
     <% end %>
-  </ul>
+  </div>
+
+  <div>
+    <% if @task.due_date.present? %>
+      <p>Due:&emsp; <%= date_display(@task.due_date) %></p>
+    <% end %>
+  </div>
+
+
+  <div>
+    <% if @task.users.present? %>
+      Responsible:
+      <ul>
+        <% @task.users.each do |user| %>
+          <li><i class="fa fa-user" aria-hidden="true"></i> <%= user.first_name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No team members assigned to this task yet.</p>
+    <% end %>
+  </div>
+
+  <% if current_user.admin? %>
+    <p class="centered btn-bg"><%= link_to edit_task_path(@task) do %>
+      <i class="fa fa-pencil task-button" aria-hidden="true"></i>&emsp;
+    <% end %>
+    <%= link_to task_path(@task), method: :delete, data: {confirm: "Are you sure you want to remove the task?"} do %>
+      <i class="fa fa-trash task-button" aria-hidden="true"></i>
+    <% end %></p>
+  <% end %>
+
 </div>
 

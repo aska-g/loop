@@ -12,7 +12,7 @@
       Nothing to do, go and chill
     <% else %>
       <% @tasks.each do |task| %>
-        <li class="task <%= 'overdue' if !task.done? && task.due_date.present? && (task.due_date < Date.today) %>">
+        <li class="task <%= 'overdue' if !task.done? && task.due_date.present? && (task.due_date < Date.today) %> <%= 'done-task' if task.done? %>">
           <% if !task.done? %>
             <%= link_to '', complete_task_path(task), method: :put, class: "fa fa-circle-o" %>&emsp;<%= link_to task.name, task_path(task) %>
           <% else %>
@@ -35,10 +35,10 @@
       <% end %>
     <% end %>
   </ul>
-  <div class="task-button">
+  <div class="centered">
     <% if current_user.admin? %>
       <%= link_to new_task_path do %>
-        <i class="fa fa-plus-circle"></i>
+        <i class="fa fa-plus task-button"></i>
       <% end %>
     <% end %>
   </div>
