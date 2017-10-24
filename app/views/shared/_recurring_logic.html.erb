@@ -1,0 +1,100 @@
+<!-- daily recurrence -->
+<% if @task.recurrence[:rule_type] == "IceCube::DailyRule" %>
+  <% if @task.recurrence[:interval] === 1 %>
+    Recurs daily
+  <% else %>
+    Recurs every <%= @task.recurrence[:interval] %> days
+  <% end %>
+
+<!-- weekly recurrence -->
+<% elsif @task.recurrence[:rule_type] == "IceCube::WeeklyRule" %>
+  <% if @task.recurrence[:interval] === 1 %>
+    Recurs weekly
+  <% else %>
+    Recurs every <%= @task.recurrence[:interval] %> weeks
+  <% end %>
+
+  <% if @task.recurrence[:validations][:day].present? %>
+    <p><% @task.recurrence[:validations][:day].each do |day| %>
+      &emsp;<i class="fa fa-calendar-check-o" aria-hidden="true"></i> <%= Date::DAYNAMES[day] %>
+    <% end %></p>
+  <% end %>
+
+<!-- monthly recurrence -->
+<% elsif @task.recurrence[:rule_type] == "IceCube::MonthlyRule" %>
+  <% if @task.recurrence[:interval] === 1 %>
+    Recurs monthly
+  <% else %>
+    Recurs every <%= @task.recurrence[:interval] %> months
+  <% end %>
+  <% if @task.recurrence[:validations][:day_of_month].present? %>
+    <p><% @task.recurrence[:validations][:day_of_month].each do |day| %>
+      &emsp;<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+      <% if day == -1 %>
+        last day of a month
+
+      <% elsif day == 1 || day == 21 %>
+        <%= day %>st
+      <% elsif day == 2 || day == 22 %>
+        <%= day %>nd
+      <% elsif day == 3 || day == 23 %>
+        <%= day %>rd
+      <% else %>
+        <%= day %>th
+      <% end %>
+    <% end %></p>
+  <% end %>
+
+<!-- yearly recurrence -->
+<% elsif @task.recurrence[:rule_type] == "IceCube::YearlyRule" %>
+  <% if @task.recurrence[:interval] === 1 %>
+    Recurs yearly
+  <% else %>
+    Recurs every <%= @task.recurrence[:interval] %> years
+  <% end %>
+<% end %>
+
+
+
+ <!--  Recurs weekly
+
+
+      # task repeating on a given day of month
+      if @task.recurrence[:validations][:day_of_month].present?
+        @task.recurrence[:validations][:day_of_month].each do |day|
+          if day == -1
+            last day of a month
+          else
+            day
+
+      # monthly task repeating on given days of given weeks
+      if @task.recurrence[:validations][:day_of_week].present?
+        @task.recurrence[:validations][:day_of_week].each do |k, v|
+          # day of week has passed this week
+
+          v.each do |value|
+            if value == 1
+              order_number = "#{value}st"
+            elsif value == 2
+              order_number = "#{value}nd"
+            elsif value == 3
+              order_number = "#{value}rd"
+            else
+              order_number = "#{value}th"
+            end
+
+            chronic_date = "#{order_number} #{Date::DAYNAMES[k]}"
+            if Time.now < Chronic.parse("#{chronic_date} this #{Date::MONTHNAMES[@month_today]}")
+              CloneJob.set(wait_until: Chronic.parse("#{chronic_date} this #{Date::MONTHNAMES[@month_today]}")).perform_later(self.id)
+            elsif Time.now >= Chronic.parse("#{chronic_date} this #{Date::MONTHNAMES[@month_today]}")
+              CloneJob.set(wait_until: Chronic.parse("#{chronic_date} of next month")).perform_later(self.id)
+            end
+          end
+        end
+
+    # annual task
+      elsif self.recurrence[:rule_type] == "IceCube::YearlyRule"
+        CloneJob.set(wait_until: Chronic.parse("#{@interval} year from now")).perform_later(self.id)
+      end
+    end
+ -->

@@ -1,12 +1,18 @@
 <div class="wrapper">
   <h2><%= @task.name %></h2>
-
   <div>
-    <p>Recurring?&emsp;
-    <% if @task.recurrence.present? %>
+    <p>Completed?&emsp;
+    <% if @task.done? %>
       <i class="fa fa-check" aria-hidden="true"></i> Yes</p>
     <% else %>
       <i class="fa fa-times" aria-hidden="true"></i> No</p>
+    <% end %>
+  </div>
+
+  <div>
+    <p>
+    <% if @task.recurrence.present? %>
+      <i class="fa fa-repeat" aria-hidden="true"></i><%= render 'shared/recurring_logic' %></p>
     <% end %>
   </div>
 

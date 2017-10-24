@@ -24,9 +24,6 @@
             &emsp;<i class="fa fa-clock-o" aria-hidden="true"></i>
           <% elsif task.recurrence.present? == true %>
             &emsp;<i class="fa fa-repeat" aria-hidden="true"></i>
-            <% if task.recurrence[:validations][:day].present? %>
-              <%= Date::DAYNAMES[task.created_at.wday] %>
-            <% end %>
           <% elsif task.high_priority == true %>
             &emsp;<i class="fa fa-bolt" aria-hidden="true"></i>
           <% end %>
